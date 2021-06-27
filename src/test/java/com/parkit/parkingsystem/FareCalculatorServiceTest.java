@@ -124,4 +124,20 @@ public class FareCalculatorServiceTest {
         assertEquals( (24 * Fare.CAR_RATE_PER_HOUR) , ticket.getPrice());
     }
 
+    // On gare une voiture moins de 30 minutes et on teste que le prix est bien égale à 0.
+    @Test
+    public void calculateFareCareWith30minParkingTime(){
+        Date inTime = new Date();
+        inTime.setTime( System.currentTimeMillis() - (  (30 * 60 * 1000 ) - 1000 ));
+        Date outTime = new Date();
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
+
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket);
+        assertEquals( 0.00 , ticket.getPrice());
+    }
+
+
 }
